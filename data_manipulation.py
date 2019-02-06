@@ -17,7 +17,8 @@ for i in range(sheet.nrows - 1):
     street_add = ' '.join(street_add_list)
     row_val.append(house_num)
     row_val.append(street_add)
-    res_list.append(row_val)
+    if row_val not in res_list:
+        res_list.append(row_val)
 
 write_book = xlsxwriter.Workbook('updated_roe_bog.xlsx')
 write_sheet = write_book.add_worksheet()
