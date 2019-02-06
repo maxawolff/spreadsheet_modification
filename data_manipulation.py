@@ -13,7 +13,7 @@ for i in range(sheet.nrows - 1):
     address = row_val.pop(9)
     add_list = address.split(' ')
     house_num = add_list[0]
-    street_add_list = add_list[1:4]
+    street_add_list = add_list[1:]
     street_add = ' '.join(street_add_list)
     row_val.append(house_num)
     row_val.append(street_add)
@@ -27,7 +27,15 @@ col = 0
 headers = ['Applicant Name', 'Phone Number', 'Application Number', 'City',
            'FEMA ID', 'House Number', 'Street Address']
 
-res_list.insert(0, headers)
+write_sheet.write(0, 0, headers[0])
+write_sheet.write(0, 1, headers[1])
+write_sheet.write(0, 2, headers[2])
+write_sheet.write(0, 3, headers[3])
+write_sheet.write(0, 4, headers[4])
+write_sheet.write(0, 5, headers[5])
+write_sheet.write(0, 6, headers[6])
+
+row += 1
 
 for name, phone, app, city, county, fema, lat, lon, prop, house, street in res_list:
     write_sheet.write(row, col, name)
