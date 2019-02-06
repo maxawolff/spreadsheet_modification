@@ -9,20 +9,34 @@ sheet = wb.sheet_by_index(0)
 
 res_list = []
 for i in range(sheet.nrows - 1):
-    res_list.append(sheet.row_values(i + 1))
+    row_val = sheet.row_values(i + 1)
+    address = row_val.pop(9)
+    add_list = address.split(' ')
+    house_num = add_list[0]
+    street_add_list = add_list[1:4]
+    street_add = ' '.join(street_add_list)
+    row_val.append(house_num)
+    row_val.append(street_add)
+    res_list.append(row_val)
 
 write_book = xlsxwriter.Workbook('updated_roe_bog.xlsx')
 write_sheet = write_book.add_worksheet()
 row = 0
 col = 0
 
-for name, phone, app, city, county, fema, lat, lon, prop, address in res_list:
+headers = ['Applicant Name', 'Phone Number', 'Application Number', 'City',
+           'FEMA ID', 'House Number', 'Street Address']
+
+res_list.insert(0, headers)
+
+for name, phone, app, city, county, fema, lat, lon, prop, house, street in res_list:
     write_sheet.write(row, col, name)
     write_sheet.write(row, col + 1, phone)
     write_sheet.write(row, col + 2, app)
     write_sheet.write(row, col + 3, city)
     write_sheet.write(row, col + 4, fema)
-    write_sheet.write(row, col + 5, address)
+    write_sheet.write(row, col + 5, house)
+    write_sheet.write(row, col + 6, street)
     row += 1
 
 write_book.close()
